@@ -1,0 +1,24 @@
+---
+type Props = {
+  gap?: string;
+  justify?: string;
+  wrap?: boolean;
+  align?: string;
+}
+const { gap, justify = 'flex-start', wrap = false, align } = Astro.props;
+---
+
+<div>
+  <slot />
+</div>
+
+<style define:vars={{ gap, justify, wrap: wrap ? 'wrap' : 'nowrap', align }}>
+  div {
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap, var(--t-spacing-3));
+    justify-content: var(--justify, 'flex-start');
+    flex-wrap: var(--wrap, 'nowrap');
+    align-items: var(--align, 'center');
+  }
+</style>

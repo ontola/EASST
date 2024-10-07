@@ -1,0 +1,19 @@
+---
+type Props = {
+  class?: string;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class={className} {...rest}>
+  <slot />
+</div>
+
+<style>
+  div {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-inline: var(--t-spacing-3);
+  }
+</style>

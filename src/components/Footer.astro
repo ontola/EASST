@@ -1,0 +1,72 @@
+---
+import Input from './Input.astro';
+import Container from './Layout/Container.astro';
+import HStack from './Layout/HStack.astro';
+import VStack from './Layout/VStack.astro';
+---
+
+<footer>
+  <Container>
+    <HStack justify="space-between" wrap>
+      <VStack gap="0.5rem">
+        <h2>
+          Contact Info:
+        </h2>
+        <p>
+          EASST@gmail.com<br/>
+          Gekke straat 43, 6969HI<br/>
+          Capelle del Mar, Netherlands
+        </p>
+      </VStack>
+      <VStack gap="0.5rem">
+        <h2>
+          Socials:
+        </h2>
+        <ul>
+          <li>
+            <a href="https://twitter.com/EASST">Twitter</a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/easst.eu/">Instagram</a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/easst-european-association-for-the-study-of-science-and-technology/">LinkedIn</a>
+          </li>
+        </ul>
+      </VStack>
+      <VStack gap="0.5rem">
+        <h2>
+          Newsletter:
+        </h2>
+        <form>
+          <Input type="email" placeholder="Email" />
+          <button type="submit">Subscribe</button>
+        </form>
+      </VStack>
+    </HStack>
+  </Container>
+</footer>
+
+<style>
+  footer {
+    padding: var(--t-spacing-3);
+    padding-block: var(--t-spacing-5);
+    background-color: black;
+    color: var(--t-colors-text-inverted);
+
+    h2 {
+      font-size: 1rem;
+      margin: 0px;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

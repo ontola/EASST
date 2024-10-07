@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'input'>;
+const props = Astro.props;
+---
+
+<input {...props} />
+
+<style>
+  input {
+    border: 1px solid var(--t-color-border);
+    border-radius: var(--t-border-radius);
+    padding: 0.3rem var(--t-spacing-3);
+  }
+</style>

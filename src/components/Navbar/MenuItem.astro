@@ -1,0 +1,22 @@
+---
+type Props = {
+  name: string;
+  href: string;
+}
+
+const { name, href } = Astro.props;
+---
+
+<a href={href}>{name}</a>
+
+<style>
+  a {
+    font-weight: bold;
+    font-size: 1.2rem;
+
+    &:hover, &:focus-visible {
+      color: var(--t-colors-main);
+      text-decoration: underline;
+    }
+  }
+</style>

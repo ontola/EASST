@@ -1,0 +1,34 @@
+:root {
+  --t-colors-main: hsl(0, 63%, 79%);
+  --t-colors-text: black;
+  --t-colors-text-inverted: white;
+  --t-border-radius: 10px;
+
+  --t-background-nav: rgb(45, 45, 45);
+  --t-background: rgb(255, 255, 255);
+  --t-background-callout-1: #d4e8f7;
+  --t-background-callout-1-gradient: linear-gradient(75deg, rgb(186, 255, 250) 0%, rgba(212, 232, 247, 1) 100%);
+  --t-font-family-main: "Lato", sans-serif;
+  --t-font-family-heading: 'Josefin Sans Variable', sans-serif;
+
+  --t-spacing-3: 1rem;
+  --t-spacing-4: 1.5rem;
+  --t-spacing-5: 2rem;
+  --t-spacing-6: 4rem;
+}
+
+body {
+  font-family: var(--t-font-family-main);
+  background-color: var(--t-background);
+  padding: 0px;
+  margin: 0px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--t-font-family-heading);
+  text-wrap: balance;
+}
+
+a {
+  text-decoration: none;
+}

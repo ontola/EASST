@@ -1,0 +1,64 @@
+---
+import Container from '../Layout/Container.astro';
+import HStack from '../Layout/HStack.astro';
+import MenuItem from './MenuItem.astro';
+
+const menuItems = [
+  {
+    name: 'About',
+    href: '/',
+  },
+  {
+    name: 'Get Involved',
+    href: '/',
+  },
+  {
+    name: 'Blog',
+    href: '/',
+  },
+  {
+    name: 'Contact',
+    href: '/',
+  },
+]
+---
+
+<nav>
+  <Container>
+
+    <ul>
+        <HStack wrap align="center" gap="2rem">
+          <li>
+            <a href="#">
+              <h1>EASST</h1>
+            </a>
+          </li>
+          {menuItems.map((item) => (
+            <li>
+              <MenuItem name={item.name} href={item.href} />
+            </li>
+          ))}
+        </HStack>
+    </ul>
+  </Container>
+</nav>
+
+<style>
+  nav {
+    background-color: var(--t-background-nav);
+    color: var(--t-colors-text-inverted);
+    padding: var(--t-spacing-3);
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--t-font-family-main);
+    line-height: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,20 @@
+---
+type Props = {
+  gap?: string;
+  center?: boolean;
+};
+const { gap, center = false } = Astro.props;
+---
+
+<div>
+  <slot />
+</div>
+
+<style define:vars={{ gap, center }}>
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap, var(--t-spacing-3));
+    justify-content: var(--center, 'flex-start');
+  }
+</style>
