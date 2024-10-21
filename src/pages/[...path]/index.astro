@@ -1,0 +1,41 @@
+---
+import { CollectionBuilder } from '@tomic/lib';
+import { website } from '../../ontologies/website';
+import { getStore } from '../../atomic/getStore';
+import MainLayout from '../../layouts/MainLayout.astro';
+import FullPageView from '../../views/FullPage/FullPageView.astro';
+
+export async function getStaticPaths() {
+  const store = getStore();
+  const paths = [];
+
+  const collection = new CollectionBuilder(store)
+    .setProperty(website.properties.href)
+    .build();
+
+  for await (const subject of collection) {
+    const resource = await store.getResource(subject);
+
+    paths.push({
+      params: { path: resource.get(website.properties.href) },
+      props: { subject: subject },
+    });
+  }
+
+  return paths;
+}
+
+type Props = {
+  subject: string;
+};
+
+const { subject } = Astro.props;
+
+const store = getStore();
+
+const resource = await store.getResource(subject);
+---
+
+<MainLayout resource={resource}>
+  <FullPageView {resource} />
+</MainLayout>

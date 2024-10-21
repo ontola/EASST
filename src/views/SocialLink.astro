@@ -1,0 +1,16 @@
+---
+import { getStore } from '../atomic/getStore';
+import type { SocialLink } from '../ontologies/website';
+
+type Props = {
+  subject: string;
+};
+
+const { subject } = Astro.props;
+const store = getStore();
+const socialLinkResource = await store.getResource<SocialLink>(subject);
+---
+
+<a href={socialLinkResource.props.externalLink}>
+  {socialLinkResource.props.name}
+</a>

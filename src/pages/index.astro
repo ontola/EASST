@@ -1,34 +1,19 @@
 ---
-import Hero from '../components/Hero/Hero.astro';
-import Container from '../components/Layout/Container.astro';
-import TextBlock from '../components/TextBlock.astro';
+import { ATOMIC_WEBSITE_SUBJECT } from 'astro:env/client';
 import MainLayout from '../layouts/MainLayout.astro';
+import { getStore } from '../atomic/getStore';
+import type { Homepage, Website } from '../ontologies/website';
+import VStack from '../components/Layout/VStack.astro';
+import BlockView from '../views/Block/BlockView.astro';
+
+const store = getStore();
+const siteResource = await store.getResource<Website>(ATOMIC_WEBSITE_SUBJECT);
+
+const homepage = await store.getResource<Homepage>(siteResource.props.homepage);
 ---
 
-<MainLayout title="EASST">
-	<Hero />
-	<TextBlock
-	title="Our approach "
-	>
-	<h3>
-		Research
-	</h3>
-	<p>
-	We explore how existing and emerging legal frameworks can be leveraged to ensure safer advances in science and technology for people and the planet.
-	</p>
-
-	<h3>
-		Development
-	</h3>
-	<p>
-		We identify opportunities and develop actionable strategies to achieve these goals.
-	</p>
-	<h3>
-		Inform
-	</h3>
-	<p>
-	We inform legal professionals about how they can help make advances in science and technology safer for people and the planet.
-	</p>
-</TextBlock>
+<MainLayout resource={homepage}>
+  <VStack>
+    {(homepage.props.blocks ?? []).map(block => <BlockView subject={block} />)}
+  </VStack>
 </MainLayout>
-

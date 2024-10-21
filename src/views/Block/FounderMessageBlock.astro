@@ -1,0 +1,59 @@
+---
+import { marked } from 'marked';
+import type { Resource, Server } from '@tomic/lib';
+import type { FounderMessageBlock } from '../../ontologies/website';
+import Container from '../../components/Layout/Container.astro';
+import { getStore } from '../../atomic/getStore';
+import HStack from '../../components/Layout/HStack.astro';
+import VStack from '../../components/Layout/VStack.astro';
+
+type Props = {
+  resource: Resource<FounderMessageBlock>;
+};
+
+const { resource } = Astro.props;
+const store = getStore();
+const image = await store.getResource<Server.File>(resource.props.image);
+const content = marked.parse(resource.props.description);
+---
+
+<div class='wrapper'>
+  <Container>
+    <VStack>
+      <h2>{resource.title}</h2>
+      <div>
+        <img src={image.props.downloadUrl} alt='An image of the founder' />
+        <div set:html={content} />
+      </div>
+    </VStack>
+  </Container>
+</div>
+
+<style>
+  .wrapper {
+    background-color: var(--t-colors-dark);
+    color: var(--t-colors-text-inverted);
+    padding-block: var(--t-spacing-6);
+
+    p {
+      max-width: 75ch;
+      text-align: justify;
+    }
+
+    p:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+
+  img {
+    width: clamp(8rem, 30vw, 13rem);
+    height: clamp(8rem, 30vw, 13rem);
+    margin-inline-end: 1rem;
+    float: left;
+    border-radius: var(--t-border-radius);
+  }
+</style>

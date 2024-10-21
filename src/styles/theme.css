@@ -1,13 +1,20 @@
 :root {
-  --t-colors-main: hsl(0, 63%, 79%);
-  --t-colors-text: black;
+  --mint9: color(display-p3 0.62 0.908 0.834);
+  --yellow5: color(display-p3 0.984 0.91 0.51);
+
+  --t-colors-main: var(--mint9);
+  --t-colors-dark: color(display-p3 0.113 0.125 0.14);
+  --t-colors-text: var(--t-colors-dark);
+  --t-colors-text-light: color(display-p3 0.379 0.392 0.421);
   --t-colors-text-inverted: white;
+  --t-colors-border: color(display-p3 0.727 0.733 0.773);
   --t-border-radius: 10px;
 
   --t-background-nav: rgb(45, 45, 45);
-  --t-background: rgb(255, 255, 255);
-  --t-background-callout-1: #d4e8f7;
-  --t-background-callout-1-gradient: linear-gradient(75deg, rgb(186, 255, 250) 0%, rgba(212, 232, 247, 1) 100%);
+  --t-background-slate1: color(display-p3 0.976 0.976 0.984);
+  --t-background-white: rgb(255, 255, 255);
+  --t-background: var(--t-background-slate1);
+  --t-background-callout-1-gradient: linear-gradient(120deg, var(--mint9) 0%, var(--mint9) 30%, var(--yellow5) 100%);
   --t-font-family-main: "Lato", sans-serif;
   --t-font-family-heading: 'Josefin Sans Variable', sans-serif;
 
@@ -31,4 +38,8 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
   text-decoration: none;
+}
+
+p {
+  text-wrap: pretty;
 }

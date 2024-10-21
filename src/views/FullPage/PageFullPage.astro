@@ -1,0 +1,23 @@
+---
+import type { Resource } from '@tomic/lib';
+import type { Page } from '../../ontologies/website';
+import BlockView from '../Block/BlockView.astro';
+import Container from '../../components/Layout/Container.astro';
+import VStack from '../../components/Layout/VStack.astro';
+
+type Props = {
+  resource: Resource<Page>;
+};
+
+const { resource } = Astro.props;
+---
+
+<Container>
+  <h2>{resource.title}</h2>
+
+  <VStack>
+    {(resource.props.blocks ?? []).map(block => <BlockView subject={block} />)}
+  </VStack>
+</Container>
+
+<style></style>

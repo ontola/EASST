@@ -1,19 +1,26 @@
 ---
 type Props = {
   class?: string;
-}
+};
 
 const { class: className, ...rest } = Astro.props;
 ---
 
 <div class={className} {...rest}>
-  <slot />
+  <div class='inner'>
+    <slot />
+  </div>
 </div>
 
 <style>
   div {
-    max-width: 1000px;
+    width: min(1000px, 100%);
     margin: 0 auto;
-    padding-inline: var(--t-spacing-3);
+    padding-inline: var(--inner-container-padding, var(--t-spacing-3));
+  }
+
+  .inner {
+    --inner-container-padding: 0px;
+    display: contents;
   }
 </style>

@@ -1,0 +1,17 @@
+---
+import type { Resource } from '@tomic/lib';
+import PageFullPage from './PageFullPage.astro';
+import { website } from '../../ontologies/website';
+
+type Props = {
+  resource: Resource;
+};
+
+const { resource } = Astro.props;
+---
+
+{resource.hasClasses(website.classes.page) ? (
+  <PageFullPage {resource} />
+) : (
+  <h1>Not implemented</h1>
+)}

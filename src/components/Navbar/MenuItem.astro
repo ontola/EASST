@@ -1,22 +1,44 @@
 ---
-type Props = {
-  name: string;
-  href: string;
-}
+import { getStore } from '../../atomic/getStore';
+import type { MenuItem, Page } from '../../ontologies/website';
 
-const { name, href } = Astro.props;
+type Props = {
+  subject: string;
+};
+
+const { subject } = Astro.props;
+
+const store = getStore();
+const menuItem = await store.getResource<MenuItem>(subject);
+
+let href: string = '#';
+
+if (menuItem.props.linksTo) {
+  const page = await store.getResource<Page>(menuItem.props.linksTo);
+  href = page.props.href;
+} else if (menuItem.props.externalLink) {
+  href = menuItem.props.externalLink;
+}
 ---
 
-<a href={href}>{name}</a>
+<a href={href}>
+  {href === '/' ? <h1>EASST</h1> : menuItem.title}
+</a>
 
 <style>
   a {
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
 
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
       color: var(--t-colors-main);
-      text-decoration: underline;
     }
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--t-font-family-main);
+    line-height: 1rem;
   }
 </style>

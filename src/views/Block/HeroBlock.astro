@@ -1,0 +1,67 @@
+---
+import type { Resource } from '@tomic/lib';
+import type { HeroBlock } from '../../ontologies/website';
+import shield from '../../assets/shield.svg';
+import Container from '../../components/Layout/Container.astro';
+import { marked } from 'marked';
+
+type Props = {
+  resource: Resource<HeroBlock>;
+};
+
+const { resource } = Astro.props;
+
+const content = marked.parse(resource.props.description);
+---
+
+<div class='hero'>
+  <Container class='relative-container'>
+    <h2>
+      {resource.title}
+    </h2>
+    <div set:html={content} />
+    <img src={shield.src} alt='' />
+  </Container>
+</div>
+
+<style>
+  .hero {
+    background-image: var(--t-background-callout-1-gradient);
+    padding: var(--t-spacing-3);
+    padding-block: var(--t-spacing-6);
+  }
+
+  .relative-container {
+    container-type: inline-size;
+    position: relative;
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 7vw, 4rem);
+    margin: 0;
+  }
+
+  p {
+    max-width: 75ch;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      translate: 100px 0px;
+    }
+    to {
+      opacity: 0.05;
+      translate: 0 0;
+    }
+  }
+  img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40cqw;
+    height: auto;
+    opacity: 0.05;
+    animation: fade-in 800ms ease-in-out;
+  }
+</style>

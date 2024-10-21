@@ -1,0 +1,85 @@
+---
+import { marked } from 'marked';
+import { getStore } from '../atomic/getStore';
+import Input from '../components/Input.astro';
+import Container from '../components/Layout/Container.astro';
+import HStack from '../components/Layout/HStack.astro';
+import VStack from '../components/Layout/VStack.astro';
+import type { Footer } from '../ontologies/website';
+import SocialLink from './SocialLink.astro';
+
+type Props = {
+  subject: string;
+};
+
+const { subject } = Astro.props;
+const store = getStore();
+const footerResource = await store.getResource<Footer>(subject);
+
+const contactInfo = marked.parse(footerResource.props.contactInfo);
+---
+
+<footer>
+  <Container>
+    <VStack>
+      <HStack justify='space-between' wrap>
+        <VStack gap='0.5rem'>
+          <h2>Contact Info:</h2>
+          <div set:html={contactInfo} />
+        </VStack>
+        <VStack gap='0.5rem'>
+          <h2>Socials:</h2>
+          <ul>
+            {
+              (footerResource.props.socials ?? []).map(socialLink => (
+                <li>
+                  <SocialLink subject={socialLink} />
+                </li>
+              ))
+            }
+          </ul>
+        </VStack>
+        <VStack gap='0.5rem'>
+          <h2>Newsletter:</h2>
+          <form>
+            <Input type='email' placeholder='Email' name='email' />
+            <button class='email-submit' type='submit'>Subscribe</button>
+          </form>
+        </VStack>
+      </HStack>
+      <p>Copyright {new Date().getFullYear()}</p>
+    </VStack>
+  </Container>
+</footer>
+
+<style>
+  footer {
+    padding: var(--t-spacing-3);
+    padding-block: var(--t-spacing-5);
+    background-color: var(--t-colors-dark);
+    color: var(--t-colors-text-inverted);
+
+    h2 {
+      font-size: 1rem;
+      margin: 0px;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .email-submit {
+    background: var(--t-background-callout-1-gradient);
+    padding: 0.3rem var(--t-spacing-3);
+    border-top-right-radius: var(--t-border-radius);
+    border-bottom-right-radius: var(--t-border-radius);
+    border: none;
+  }
+</style>

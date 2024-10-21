@@ -1,30 +1,54 @@
 ---
+import { ATOMIC_WEBSITE_SUBJECT } from 'astro:env/client';
 import '@fontsource/lato';
 import '@fontsource-variable/josefin-sans';
+import type { Resource } from '@tomic/lib';
+import { getStore } from '../atomic/getStore';
+import Navbar from '../components/Navbar/Navbar.astro';
+import Footer from '../views/Footer.astro';
 import '../styles/reset.css';
 import '../styles/theme.css';
-import Navbar from '../components/Navbar/Navbar.astro';
-import Footer from '../components/Footer.astro';
-const { title} = Astro.props;
+import type { Website } from '../ontologies/website';
+
+type Props = {
+  resource: Resource;
+};
+
+const { resource } = Astro.props;
+const store = getStore();
+
+const siteResource = await store.getResource<Website>(ATOMIC_WEBSITE_SUBJECT);
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> -->
-  <title>{title}</title>
-</head>
-<body>
-  <header>
-    <Navbar />
-  </header>
-  <main>
-    <slot />
-  </main>
-  <Footer />
-</body>
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+
+    <title>{resource.title}</title>
+  </head>
+  <body>
+    <div class='page-wrapper'>
+      <header>
+        <Navbar />
+      </header>
+      <main>
+        <slot />
+      </main>
+      <Footer subject={siteResource.props.footer} />
+    </div>
+  </body>
 </html>
+
+<style>
+  .page-wrapper {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  main {
+    margin-bottom: var(--t-spacing-6);
+  }
+</style>

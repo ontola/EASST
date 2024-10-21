@@ -1,0 +1,59 @@
+---
+import type { EasstTeamMember } from '../ontologies/website';
+import { getStore } from '../atomic/getStore';
+import type { Server } from '@tomic/lib';
+
+type Props = {
+  subject: string;
+};
+
+const { subject } = Astro.props;
+
+const store = getStore();
+const resource = await store.getResource<EasstTeamMember>(subject);
+
+let imageSrc: string | undefined = undefined;
+
+if (resource.props.image) {
+  const image = await store.getResource<Server.File>(resource.props.image);
+  imageSrc = image.props.downloadUrl;
+}
+---
+
+<div class='team-member'>
+  {imageSrc && <img src={imageSrc} alt='' />}
+  <span class='name'>{resource.title}</span>
+  <p class='description'>{resource.props.description}</p>
+</div>
+
+<style>
+  .team-member {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'image name' 'image description';
+    gap: 1rem;
+    /* border: 1px solid var(--t-colors-border); */
+    padding: 1rem;
+    border-radius: var(--t-border-radius);
+    background-color: var(--t-background-white);
+  }
+
+  img {
+    grid-area: image;
+    max-width: 10rem;
+    border-radius: 10rem;
+    align-self: center;
+  }
+
+  .name {
+    grid-area: name;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  .description {
+    grid-area: description;
+    color: var(--t-colors-text-light);
+    margin: 0;
+  }
+</style>

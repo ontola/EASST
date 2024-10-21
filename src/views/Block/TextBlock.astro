@@ -1,0 +1,30 @@
+---
+import { marked } from 'marked';
+import type { Resource } from '@tomic/lib';
+import type { TextBlock } from '../../ontologies/website';
+import Container from '../../components/Layout/Container.astro';
+
+type Props = {
+  resource: Resource<TextBlock>;
+};
+
+const { resource } = Astro.props;
+
+const content = marked.parse(resource.props.description);
+---
+
+<Container>
+  <div set:html={content} />
+</Container>
+
+<style>
+  div {
+    /* h2 {
+      margin: 0;
+    } */
+
+    p {
+      max-width: 75ch;
+    }
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+import type { Resource } from '@tomic/lib';
+import type { TeamBlock } from '../../ontologies/website';
+import EASSTTeamMember from '../EASSTTeamMember.astro';
+import VStack from '../../components/Layout/VStack.astro';
+type Props = {
+  resource: Resource<TeamBlock>;
+};
+
+const { resource } = Astro.props;
+---
+
+<div class='team-block'>
+  <h3>{resource.title}</h3>
+  <VStack gap='2rem'>
+    <VStack>
+      <h4>Board of Directors</h4>
+      {
+        resource.props.boardOfDirectors.map(member => (
+          <EASSTTeamMember subject={member} />
+        ))
+      }
+    </VStack>
+    <VStack>
+      <h4>Supervisory Board</h4>
+      {
+        resource.props.supervisoryBoard.map(member => (
+          <EASSTTeamMember subject={member} />
+        ))
+      }
+    </VStack>
+  </VStack>
+</div>
+
+<style>
+  .team-block {
+    background-color: var(--t-background-white);
+    padding: var(--t-spacing-4);
+    border-radius: var(--t-border-radius);
+  }
+  h3 {
+    text-align: center;
+  }
+  h4 {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    gap: 1rem;
+
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      background-color: var(--t-colors-border);
+      height: 1px;
+    }
+  }
+</style>
