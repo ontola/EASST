@@ -1,0 +1,76 @@
+---
+import type { Resource, Server } from '@tomic/lib';
+import type { Blogpost } from '../../ontologies/website';
+import Container from '../../components/Layout/Container.astro';
+import { getStore } from '../../atomic/getStore';
+import { marked } from 'marked';
+
+type Props = {
+  resource: Resource<Blogpost>;
+};
+
+const { resource } = Astro.props;
+const store = getStore();
+const image = await store.getResource<Server.File>(resource.props.coverImage);
+
+const formatter = new Intl.DateTimeFormat('default', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const date = formatter.format(new Date(resource.props.publishedAt));
+
+const content = marked.parse(resource.props.description);
+---
+
+<article>
+  <div class='image'></div>
+  <Container>
+    <div class='blog-wrapper'>
+      <h2>{resource.title}</h2>
+      <div class='publish-date'>{date}</div>
+      <div set:html={content} />
+    </div>
+  </Container>
+</article>
+
+<style define:vars={{ bgUrl: `url(${image.props.downloadUrl})` }}>
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes parallax {
+    from {
+      background-position-y: 50%;
+      opacity: 1;
+    }
+    to {
+      background-position-y: 0%;
+      opacity: 0;
+    }
+  }
+  .image {
+    --start: 10% width: 100%;
+    height: 25rem;
+    opacity: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: 50%;
+    object-fit: cover;
+    background-image: var(--bgUrl);
+    animation: parallax 1s linear forwards;
+    animation-timeline: view(0% 95%);
+  }
+
+  .blog-wrapper {
+    padding-block: 1rem;
+    max-width: 70ch;
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+</style>

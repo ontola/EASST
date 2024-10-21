@@ -2,6 +2,8 @@
 import type { Resource } from '@tomic/lib';
 import PageFullPage from './PageFullPage.astro';
 import { website } from '../../ontologies/website';
+import BlogIndexFullPage from './BlogIndexFullPage.astro';
+import BlogPostFullPage from './BlogPostFullPage.astro';
 
 type Props = {
   resource: Resource;
@@ -10,8 +12,14 @@ type Props = {
 const { resource } = Astro.props;
 ---
 
-{resource.hasClasses(website.classes.page) ? (
-  <PageFullPage {resource} />
-) : (
-  <h1>Not implemented</h1>
-)}
+{resource.hasClasses(website.classes.page) && <PageFullPage {resource} />}
+{
+  resource.hasClasses(website.classes.blogIndexPage) && (
+    <BlogIndexFullPage {resource} />
+  )
+}
+{
+  resource.hasClasses(website.classes.blogpost) && (
+    <BlogPostFullPage {resource} />
+  )
+}

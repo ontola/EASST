@@ -1,0 +1,49 @@
+---
+import Container from '../../components/Layout/Container.astro';
+import { CollectionBuilder, core, type Resource } from '@tomic/lib';
+import { website, type BlogIndexPage } from '../../ontologies/website';
+import { getStore } from '../../atomic/getStore';
+import VStack from '../../components/Layout/VStack.astro';
+import BlogPostCard from '../BlogPost/BlogPostCard.astro';
+
+type Props = {
+  resource: Resource<BlogIndexPage>;
+};
+
+const { resource } = Astro.props;
+const store = getStore();
+
+const collection = new CollectionBuilder(store)
+  .setProperty(core.properties.isA)
+  .setValue(website.classes.blogpost)
+  .setSortBy(website.properties.publishedAt)
+  .build();
+
+const results = await collection.getAllMembers();
+---
+
+<Container>
+  <h2>{resource.title}</h2>
+  <ul>
+    {
+      results.map(result => (
+        <li>
+          <BlogPostCard subject={result} />
+        </li>
+      ))
+    }
+  </ul>
+</Container>
+
+<style>
+  ul {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(calc(var(--t-max-container-size) / 3 - 4rem), 1fr)
+    );
+    gap: 2rem;
+    list-style-type: none;
+    padding: 0;
+  }
+</style>

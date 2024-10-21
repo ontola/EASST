@@ -22,6 +22,8 @@
   --t-spacing-4: 1.5rem;
   --t-spacing-5: 2rem;
   --t-spacing-6: 4rem;
+
+  --t-max-container-size: 1000px;
 }
 
 body {
