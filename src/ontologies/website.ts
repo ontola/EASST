@@ -40,6 +40,8 @@ export const website = {
       'https://atomicdata.dev/01j9kkhn5h8h4rjmyk9hq0cwmj/website/property/blocks',
     boardOfDirectors:
       'https://atomicdata.dev/01j9kkhn5h8h4rjmyk9hq0cwmj/website/property/board-of-directors',
+    columnLayout:
+      'https://atomicdata.dev/01j9kkhn5h8h4rjmyk9hq0cwmj/website/property/column-layout',
     contactInfo:
       'https://atomicdata.dev/01j9kkhn5h8h4rjmyk9hq0cwmj/website/property/contact-info',
     coverImage:
@@ -181,7 +183,7 @@ declare module '@tomic/lib' {
     };
     [website.classes.textBlock]: {
       requires: BaseProps | 'https://atomicdata.dev/properties/description';
-      recommends: never;
+      recommends: typeof website.properties.columnLayout;
     };
     [website.classes.website]: {
       requires:
@@ -196,6 +198,7 @@ declare module '@tomic/lib' {
   interface PropTypeMapping {
     [website.properties.blocks]: string[];
     [website.properties.boardOfDirectors]: string[];
+    [website.properties.columnLayout]: boolean;
     [website.properties.contactInfo]: string;
     [website.properties.coverImage]: string;
     [website.properties.externalLink]: string;
@@ -215,6 +218,7 @@ declare module '@tomic/lib' {
   interface PropSubjectToNameMapping {
     [website.properties.blocks]: 'blocks';
     [website.properties.boardOfDirectors]: 'boardOfDirectors';
+    [website.properties.columnLayout]: 'columnLayout';
     [website.properties.contactInfo]: 'contactInfo';
     [website.properties.coverImage]: 'coverImage';
     [website.properties.externalLink]: 'externalLink';

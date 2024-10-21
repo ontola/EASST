@@ -81,5 +81,19 @@ const contactInfo = marked.parse(footerResource.props.contactInfo);
     border-top-right-radius: var(--t-border-radius);
     border-bottom-right-radius: var(--t-border-radius);
     border: none;
+    cursor: pointer;
+    transition:
+      transform 100ms ease-in-out,
+      filter 100ms ease-in-out;
+
+    outline: none;
+    &:hover,
+    &:focus-visible {
+      filter: brightness(1.2);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
   }
 </style>
