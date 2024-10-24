@@ -3,6 +3,12 @@
 - Uses [AtomicServer](https://github.com/atomicdata-dev/atomic-server/) as headless CMS and [Astro](https://docs.atomicdata.dev/astro-guide/1-index) for rendering
 - Hosted on Netlify
 
+## Editing content
+
+- Visit https://atomicdata.dev/01j9kkhn5h8h4rjmyk9hq0cwmj
+- Sign in with your provided secret (or ask joep@ontola.io for a new one)
+- Edits are published directly to the website
+
 ## Running locally
 
 ```sh
